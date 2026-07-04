@@ -22,6 +22,7 @@ Questivate lets users curate their personal media library across three categorie
 - **Public User Profiles** — view other users' collections and reviews via `/users/:username`
 - **Google OAuth Login** — login via Google in addition to local email/password
 - **Avatar Upload** — profile pictures uploaded and served via Cloudinary
+- **📲 Installable App (PWA)** — install Questivate to your home screen (desktop or mobile) for an app-like experience, complete with custom icon and splash screen
 
 ### 📱 Responsive UI Highlights
 
@@ -41,6 +42,7 @@ Questivate lets users curate their personal media library across three categorie
 - **@react-oauth/google** for Google Sign-In integration
 - **React Toastify** for notifications
 - **Vanilla CSS** (custom design — no UI framework)
+- **vite-plugin-pwa** for installable PWA support (auto-generated manifest + service worker)
 
 ### Backend (`/server`)
 
@@ -68,6 +70,11 @@ Questivate lets users curate their personal media library across three categorie
 questivate/
 ├── client/                        # React + Vite frontend
 │   ├── public/
+│   │   ├── favicon.svg
+│   │   ├── icons.svg
+│   │   ├── pwa-192x192.png        # PWA icon (any)
+│   │   ├── pwa-512x512.png        # PWA icon (any)
+│   │   └── maskable-icon-512x512.png  # PWA icon (maskable, safe-zone padded)
 │   ├── src/
 │   │   ├── app/
 │   │   │   └── store.js           # Redux store config
@@ -105,7 +112,8 @@ questivate/
 │   │   └── main.jsx
 │   ├── index.html
 │   ├── package.json
-│   └── vite.config.js
+│   ├── vercel.json                # SPA rewrite rule (all routes -> index.html)
+│   └── vite.config.js             # includes VitePWA plugin config
 │
 └── server/                        # Node + Express backend
     ├── __tests__/                 # Jest test suites
@@ -149,6 +157,9 @@ questivate/
     ├── app.js                     # Express app (Vercel entry)
     ├── package.json
     └── vercel.json                # Vercel serverless config
+
+docs/
+└── screenshots/                   # README screenshots (see below)
 ```
 
 ---
@@ -290,14 +301,47 @@ npm test
 
 Both client and server are deployed as separate Vercel projects from the same monorepo:
 
-- **Client**: Vercel project with `client` set as Root Directory. Framework preset: Vite. Environment variables: `VITE_API_BASE_URL`, `VITE_GOOGLE_CLIENT_ID`.
+- **Client**: Vercel project with `client` set as Root Directory. Framework preset: Vite. Environment variables: `VITE_API_BASE_URL`, `VITE_GOOGLE_CLIENT_ID`. Uses `client/vercel.json` to rewrite all paths to `index.html`, so client-side routes (e.g. `/media/anime/123`) resolve correctly on direct access or refresh.
 - **Server**: Vercel project with `server` set as Root Directory. Uses `vercel.json` to route all requests to `app.js`. Requires all `.env` variables plus `NODE_ENV=production` and `DATABASE_URL` (Supabase connection string).
+
+### PWA
+
+The client is installable as a Progressive Web App via `vite-plugin-pwa`:
+
+- Manifest and service worker are generated automatically on `npm run build` (no extra build step needed)
+- Icons live in `client/public/` (`pwa-192x192.png`, `pwa-512x512.png`, `maskable-icon-512x512.png`)
+- To verify locally: `npm run build && npm run preview`, then check **DevTools → Application → Manifest / Service Workers**
+- Scope is currently **installable only** (no offline caching or push notifications)
 
 ---
 
 ## 📸 Screenshots
 
-_To be added._
+> Images live in `docs/screenshots/` at the project root and are referenced below with paths relative to this README.
+
+### Dashboard
+
+![Dashboard](docs/screenshots/DashboardPage.png)
+
+### Collections
+
+![Collections](docs/screenshots/CollectionsPage.png)
+
+### Search
+
+![Search](docs/screenshots/SearchPageResults.png)
+
+### Vibe Check Results
+
+![Vibe Check](docs/screenshots/VibeCheckPageResults.png)
+
+### User Profile
+
+![User Profile](docs/screenshots/UserProfilePage.png)
+
+### Installed as PWA/mobile view
+
+<img src="docs/screenshots/DashboardPWA.jpg" width="320" alt="Questivate running as an installed PWA" />
 
 ---
 
