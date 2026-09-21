@@ -8,9 +8,11 @@ const reviewsRouter = require("./reviews");
 const searchRouter = require("./search");
 const mediaRouter = require("./media");
 const aiRouter = require("./ai");
+const cronRouter = require("./cron");
 
 // Public routes
 router.use("/auth", authRouter);
+router.use("/api/cron", cronRouter); // dijaga CRON_SECRET, bukan JWT
 router.use("/users", usersRouter);
 router.use("/reviews", reviewsRouter);
 router.use("/media", mediaRouter);
