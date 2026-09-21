@@ -9,16 +9,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ahmadjutrzenka/ip-ahmadjutrzenka-questivate.git"
+    "url": "git+https://github.com/sengkalium/questivate.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/ahmadjutrzenka/ip-ahmadjutrzenka-questivate/issues"
+    "url": "https://github.com/sengkalium/questivate/issues"
   },
-  "homepage": "https://github.com/ahmadjutrzenka/ip-ahmadjutrzenka-questivate#readme",
+  "homepage": "https://github.com/sengkalium/questivate#readme",
   "dependencies": {
     "@google/genai": "^1.50.1",
     "@google/generative-ai": "^0.24.1",

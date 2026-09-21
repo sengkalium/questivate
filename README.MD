@@ -228,7 +228,7 @@ All associations cascade on delete.
 ### 1. Clone
 
 ```bash
-git clone https://github.com/ahmadjutrzenka/questivate.git
+git clone https://github.com/sengkalium/questivate.git
 cd questivate
 ```
 
